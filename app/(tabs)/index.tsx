@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, ImageBackground, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
+import { useRouter, Link } from 'expo-router';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -31,32 +31,33 @@ export default function HomeScreen() {
           </View>
 
           {/* Card Hero Container */}
-          <TouchableOpacity 
-            style={styles.cardHeroContainer}
-            activeOpacity={0.9}
-            onPress={() => router.push('/order-card')}
-          >
-            <ImageBackground source={require('../../assets/images/card-hero.png')} style={styles.cardPlaceholder} imageStyle={styles.cardImage}>
-              <LinearGradient 
-                colors={['rgba(207,250,254,0.2)', 'rgba(165,243,252,0.2)']} 
-                start={{ x: 0, y: 0 }} 
-                end={{ x: 1, y: 0 }} 
-                style={styles.cardGradientOverlay} 
-              />
-              <View style={styles.cardOverlayContent}>
-                <View style={styles.cardLogoRow}>
-                  <View style={styles.cardChip} />
-                  <Text style={styles.cardLogoText}>zephyr</Text>
+          <Link href="/order-card" asChild>
+            <TouchableOpacity 
+              style={styles.cardHeroContainer}
+              activeOpacity={0.9}
+            >
+              <ImageBackground source={require('../../assets/images/card-hero.png')} style={styles.cardPlaceholder} imageStyle={styles.cardImage}>
+                <LinearGradient 
+                  colors={['rgba(207,250,254,0.2)', 'rgba(165,243,252,0.2)']} 
+                  start={{ x: 0, y: 0 }} 
+                  end={{ x: 1, y: 0 }} 
+                  style={styles.cardGradientOverlay} 
+                />
+                <View style={styles.cardOverlayContent}>
+                  <View style={styles.cardLogoRow}>
+                    <View style={styles.cardChip} />
+                    <Text style={styles.cardLogoText}>zephyr</Text>
+                  </View>
+                  <Text style={styles.cardNumberText}>•••• 8820</Text>
                 </View>
-                <Text style={styles.cardNumberText}>•••• 8820</Text>
-              </View>
-            </ImageBackground>
+              </ImageBackground>
 
-            <View style={styles.heroTextContainer}>
-              <Text style={styles.heroText}>YOUR CARD,</Text>
-              <Text style={styles.heroText}>YOUR RULES.</Text>
-            </View>
-          </TouchableOpacity>
+              <View style={styles.heroTextContainer}>
+                <Text style={styles.heroText}>YOUR CARD,</Text>
+                <Text style={styles.heroText}>YOUR RULES.</Text>
+              </View>
+            </TouchableOpacity>
+          </Link>
 
           {/* Receive Locally Section */}
           <View style={styles.receiveLocallySection}>
