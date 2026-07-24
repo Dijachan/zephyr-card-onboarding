@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ScrollView } fr
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
+import * as Animatable from 'react-native-animatable';
 
 export default function ActivityScreen() {
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function ActivityScreen() {
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           {/* Top Header Group */}
-          <View style={styles.headerGroup}>
+          <Animatable.View animation="fadeInDown" duration={600} style={styles.headerGroup}>
             <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
               <Feather name="chevron-left" size={24} color="#ffffff" />
             </TouchableOpacity>
@@ -24,10 +25,10 @@ export default function ActivityScreen() {
               <Text style={styles.headlineText}>SPENDING.</Text>
               <Text style={styles.subheadText}>Monitor every transaction — wherever you are, in real time.</Text>
             </View>
-          </View>
+          </Animatable.View>
 
           {/* Activity Card */}
-          <View style={styles.activityCard}>
+          <Animatable.View animation="fadeInUp" duration={800} delay={100} style={styles.activityCard}>
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>All activity</Text>
               <TouchableOpacity style={styles.searchButton}>
@@ -39,7 +40,7 @@ export default function ActivityScreen() {
               <Text style={styles.dateHeader}>22 JULY</Text>
 
               {/* Transaction: Netflix */}
-              <View style={styles.transactionRow}>
+              <Animatable.View animation="fadeInRight" duration={500} delay={300} style={styles.transactionRow}>
                 <View style={[styles.logoCircle, { backgroundColor: '#e11d48' }]}>
                   <Text style={styles.logoLetter}>N</Text>
                 </View>
@@ -51,10 +52,10 @@ export default function ActivityScreen() {
                   <Text style={styles.amountText}>15.99</Text>
                   <Text style={styles.currencyText}>USD</Text>
                 </View>
-              </View>
+              </Animatable.View>
 
               {/* Transaction: Uber */}
-              <View style={[styles.transactionRow, styles.activeTransaction]}>
+              <Animatable.View animation="fadeInRight" duration={500} delay={400} style={[styles.transactionRow, styles.activeTransaction]}>
                 <View style={[styles.logoCircle, { backgroundColor: '#0f172a' }]}>
                   <Text style={styles.logoLetter}>U</Text>
                 </View>
@@ -66,10 +67,10 @@ export default function ActivityScreen() {
                   <Text style={styles.amountText}>8.50</Text>
                   <Text style={styles.currencyText}>GBP</Text>
                 </View>
-              </View>
+              </Animatable.View>
 
               {/* Transaction: Stripe */}
-              <View style={styles.transactionRow}>
+              <Animatable.View animation="fadeInRight" duration={500} delay={500} style={styles.transactionRow}>
                 <View style={[styles.logoCircle, { backgroundColor: '#6366f1' }]}>
                   <Text style={styles.logoLetter}>S</Text>
                 </View>
@@ -81,18 +82,18 @@ export default function ActivityScreen() {
                   <Text style={styles.amountText}>200.00</Text>
                   <Text style={styles.currencyText}>USD</Text>
                 </View>
-              </View>
+              </Animatable.View>
 
             </View>
-          </View>
+          </Animatable.View>
 
           {/* Footer Action */}
-          <View style={styles.footerGroup}>
+          <Animatable.View animation="fadeInUp" duration={800} delay={500} style={styles.footerGroup}>
             <TouchableOpacity style={styles.ctaButton} onPress={() => router.push('/digital-wallets')}>
               <Text style={styles.ctaText}>Next</Text>
               <Feather name="arrow-right" size={20} color="#ffffff" style={styles.ctaIcon} />
             </TouchableOpacity>
-          </View>
+          </Animatable.View>
         </View>
       </SafeAreaView>
     </LinearGradient>

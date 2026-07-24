@@ -22,27 +22,31 @@ export default function DigitalWalletsScreen() {
           </Animatable.View>
 
           {/* Hero Stacked Cards */}
-          <Animatable.View animation="fadeInUp" duration={800} delay={100} style={styles.heroContainer}>
+          <View style={styles.heroContainer}>
             <View style={styles.stackedCardsContainer}>
               
               {/* Back Card */}
-              <LinearGradient 
-                colors={['rgba(255,255,255,0.18)', 'rgba(165,243,252,0.28)']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.cardBack}
-              />
+              <Animatable.View animation="fadeInDown" duration={600} delay={100} style={styles.cardBack}>
+                <LinearGradient 
+                  colors={['rgba(255,255,255,0.18)', 'rgba(165,243,252,0.28)']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={[StyleSheet.absoluteFill, { borderRadius: 12 }]}
+                />
+              </Animatable.View>
               
               {/* Middle Card */}
-              <LinearGradient 
-                colors={['rgba(165,243,252,0.12)', 'rgba(255,255,255,0.22)']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.cardMiddle}
-              />
+              <Animatable.View animation="fadeInDown" duration={600} delay={250} style={styles.cardMiddle}>
+                <LinearGradient 
+                  colors={['rgba(165,243,252,0.12)', 'rgba(255,255,255,0.22)']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={[StyleSheet.absoluteFill, { borderRadius: 14 }]}
+                />
+              </Animatable.View>
               
               {/* Front Card */}
-              <View style={styles.cardFront}>
+              <Animatable.View animation="fadeInUp" duration={800} delay={400} style={styles.cardFront}>
                 <Image 
                   source={require('../assets/images/wallet-card.png')} 
                   style={styles.cardFrontImage} 
@@ -56,17 +60,17 @@ export default function DigitalWalletsScreen() {
                   </View>
                   <Text style={styles.cardNumberText}>•••• 8820</Text>
                 </View>
-              </View>
+              </Animatable.View>
 
             </View>
 
             {/* Success Badge */}
-            <Animatable.View animation="zoomIn" duration={500} delay={600} style={styles.successBadgeContainer}>
+            <Animatable.View animation="zoomIn" duration={500} delay={800} style={styles.successBadgeContainer}>
               <View style={styles.checkmarkCircle}>
                 <Feather name="check" size={24} color="#0891b2" />
               </View>
             </Animatable.View>
-          </Animatable.View>
+          </View>
 
           {/* Wallet Messaging */}
           <Animatable.View animation="fadeInUp" duration={800} delay={300} style={styles.walletMessaging}>
