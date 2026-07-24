@@ -37,7 +37,11 @@ export default function OrderCardScreen() {
 
         {/* Footer Group */}
         <View style={styles.footerGroup}>
-          <TouchableOpacity style={styles.ctaButton}>
+          <TouchableOpacity 
+            style={styles.ctaButton}
+            onPress={() => router.push('/activity')}
+            activeOpacity={0.9}
+          >
             <Text style={styles.ctaText}>Order your card</Text>
           </TouchableOpacity>
         </View>
