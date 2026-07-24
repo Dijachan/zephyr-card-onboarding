@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, ImageBackground, SafeAreaView, ScrollView, Touc
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, Link } from 'expo-router';
+import * as Animatable from 'react-native-animatable';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -10,7 +11,7 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
         {/* Top Navigation Bar */}
-        <View style={styles.navBar}>
+        <Animatable.View animation="fadeInDown" duration={600} style={styles.navBar}>
           <TouchableOpacity style={styles.iconButton}>
             <Feather name="user" size={18} color="#0f172a" />
           </TouchableOpacity>
@@ -25,44 +26,46 @@ export default function HomeScreen() {
           >
             <Feather name="bell" size={20} color="#0f172a" />
           </TouchableOpacity>
-        </View>
+        </Animatable.View>
 
         <View style={styles.mainContent}>
           {/* Title */}
-          <View style={styles.titleContainer}>
+          <Animatable.View animation="fadeInUp" duration={600} delay={100} style={styles.titleContainer}>
             <Text style={styles.titleText}>Spend worldwide</Text>
-          </View>
+          </Animatable.View>
 
           {/* Card Hero Container */}
-          <TouchableOpacity 
-            style={styles.cardHeroContainer}
-            activeOpacity={0.9}
-            onPress={() => router.push('/order-card')}
-          >
-            <ImageBackground source={require('../../assets/images/card-hero.png')} style={styles.cardPlaceholder} imageStyle={styles.cardImage}>
-              <LinearGradient 
-                colors={['rgba(207,250,254,0.2)', 'rgba(165,243,252,0.2)']} 
-                start={{ x: 0, y: 0 }} 
-                end={{ x: 1, y: 0 }} 
-                style={styles.cardGradientOverlay} 
-              />
-              <View style={styles.cardOverlayContent}>
-                <View style={styles.cardLogoRow}>
-                  <View style={styles.cardChip} />
-                  <Text style={styles.cardLogoText}>zephyr</Text>
+          <Animatable.View animation="fadeInUp" duration={800} delay={200}>
+            <TouchableOpacity 
+              style={styles.cardHeroContainer}
+              activeOpacity={0.9}
+              onPress={() => router.push('/order-card')}
+            >
+              <ImageBackground source={require('../../assets/images/card-hero.png')} style={styles.cardPlaceholder} imageStyle={styles.cardImage}>
+                <LinearGradient 
+                  colors={['rgba(207,250,254,0.2)', 'rgba(165,243,252,0.2)']} 
+                  start={{ x: 0, y: 0 }} 
+                  end={{ x: 1, y: 0 }} 
+                  style={styles.cardGradientOverlay} 
+                />
+                <View style={styles.cardOverlayContent}>
+                  <View style={styles.cardLogoRow}>
+                    <View style={styles.cardChip} />
+                    <Text style={styles.cardLogoText}>zephyr</Text>
+                  </View>
+                  <Text style={styles.cardNumberText}>•••• 8820</Text>
                 </View>
-                <Text style={styles.cardNumberText}>•••• 8820</Text>
-              </View>
-            </ImageBackground>
+              </ImageBackground>
 
-            <View style={styles.heroTextContainer}>
-              <Text style={styles.heroText}>YOUR CARD,</Text>
-              <Text style={styles.heroText}>YOUR RULES.</Text>
-            </View>
-          </TouchableOpacity>
+              <View style={styles.heroTextContainer}>
+                <Text style={styles.heroText}>YOUR CARD,</Text>
+                <Text style={styles.heroText}>YOUR RULES.</Text>
+              </View>
+            </TouchableOpacity>
+          </Animatable.View>
 
           {/* Receive Locally Section */}
-          <View style={styles.receiveLocallySection}>
+          <Animatable.View animation="fadeInUp" duration={800} delay={400} style={styles.receiveLocallySection}>
             <Text style={styles.sectionHeader}>Receive locally</Text>
             
             <TouchableOpacity style={styles.infoRow}>
@@ -77,7 +80,7 @@ export default function HomeScreen() {
               
               <Feather name="chevron-right" size={16} color="#64748b" />
             </TouchableOpacity>
-          </View>
+          </Animatable.View>
         </View>
       </ScrollView>
     </SafeAreaView>
