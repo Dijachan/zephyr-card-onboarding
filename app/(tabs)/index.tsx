@@ -19,7 +19,10 @@ export default function HomeScreen() {
             <Text style={styles.earnBadgeText}>Earn $80</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.iconButton}>
+          <TouchableOpacity 
+            style={styles.iconButton}
+            onPress={() => router.push('/digital-wallets')}
+          >
             <Feather name="bell" size={20} color="#0f172a" />
           </TouchableOpacity>
         </View>
