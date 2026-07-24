@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, Image } from 'r
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
+import * as Animatable from 'react-native-animatable';
 
 export default function DigitalWalletsScreen() {
   const router = useRouter();
@@ -12,16 +13,16 @@ export default function DigitalWalletsScreen() {
         <View style={styles.container}>
           
           {/* Top Navigation Bar */}
-          <View style={styles.navBar}>
+          <Animatable.View animation="fadeInDown" duration={600} style={styles.navBar}>
             <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
               <Feather name="chevron-left" size={24} color="#ffffff" />
             </TouchableOpacity>
             <Text style={styles.navTitle}>Wallets</Text>
             <View style={styles.navSpacer} />
-          </View>
+          </Animatable.View>
 
           {/* Hero Stacked Cards */}
-          <View style={styles.heroContainer}>
+          <Animatable.View animation="fadeInUp" duration={800} delay={100} style={styles.heroContainer}>
             <View style={styles.stackedCardsContainer}>
               
               {/* Back Card */}
@@ -42,55 +43,46 @@ export default function DigitalWalletsScreen() {
               
               {/* Front Card */}
               <View style={styles.cardFront}>
-                <LinearGradient 
-                  colors={['rgba(236,254,255,0.9)', 'rgba(165,243,252,0.9)']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={StyleSheet.absoluteFill}
-                />
                 <Image 
                   source={require('../assets/images/wallet-card.png')} 
-                  style={styles.cardFrontImage}
+                  style={styles.cardFrontImage} 
                 />
                 
+                {/* Overlay Content */}
                 <View style={styles.cardOverlayContent}>
                   <View style={styles.cardLogoRow}>
-                    <LinearGradient 
-                      colors={['rgba(165,243,252,0.08)', 'rgba(255,255,255,0.18)']}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 0 }}
-                      style={styles.cardChip}
-                    />
-                    <Text style={styles.cardLogoText}>zephyr</Text>
+                    <View style={styles.cardChip} />
+                    <Text style={styles.cardLogoText}>$ ZEPHYR</Text>
                   </View>
                   <Text style={styles.cardNumberText}>•••• 8820</Text>
                 </View>
               </View>
 
             </View>
-            
+
             {/* Success Badge */}
-            <View style={styles.successBadgeContainer}>
+            <Animatable.View animation="zoomIn" duration={500} delay={600} style={styles.successBadgeContainer}>
               <View style={styles.checkmarkCircle}>
-                <Feather name="check" size={20} color="#0891b2" />
+                <Feather name="check" size={24} color="#0891b2" />
               </View>
-            </View>
-          </View>
+            </Animatable.View>
+          </Animatable.View>
 
           {/* Wallet Messaging */}
-          <View style={styles.walletMessaging}>
-            <Text style={styles.headlineText}>WORKS WITH</Text>
-            <Text style={styles.headlineText}>ALL WALLETS.</Text>
-            <Text style={styles.subheadText}>Pay contactlessly in apps, online, and in person — no manual entry needed.</Text>
-          </View>
+          <Animatable.View animation="fadeInUp" duration={800} delay={300} style={styles.walletMessaging}>
+            <Text style={styles.headlineText}>YOUR CARD IS READY TO USE.</Text>
+            <Text style={styles.subheadText}>
+              Start spending securely with Apple Pay while you wait for your physical card.
+            </Text>
+          </Animatable.View>
 
           {/* Footer Group */}
-          <View style={styles.footerGroup}>
+          <Animatable.View animation="fadeInUp" duration={800} delay={500} style={styles.footerGroup}>
             <TouchableOpacity style={styles.ctaPill} onPress={() => router.push('/security')}>
-              <Text style={styles.ctaText}>Next</Text>
-              <Feather name="arrow-right" size={20} color="#ffffff" />
+              <FontAwesome5 name="apple" size={20} color="#ffffff" />
+              <Text style={styles.ctaText}>Add to Apple Wallet</Text>
             </TouchableOpacity>
-          </View>
+          </Animatable.View>
 
         </View>
       </SafeAreaView>

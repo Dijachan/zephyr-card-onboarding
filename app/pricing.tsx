@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ScrollView, Ima
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
+import * as Animatable from 'react-native-animatable';
 
 export default function PricingScreen() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function PricingScreen() {
           showsVerticalScrollIndicator={false}
         >
           {/* Card Visual Container */}
-          <View style={styles.cardVisualContainer}>
+          <Animatable.View animation="fadeInDown" duration={800} delay={100} style={styles.cardVisualContainer}>
             <View style={styles.cardWrapper}>
               <LinearGradient 
                 colors={['rgba(207,250,254,0.25)', 'rgba(165,243,252,0.25)']}
@@ -42,21 +43,21 @@ export default function PricingScreen() {
                 <Text style={styles.cardNumber}>•••• 8820</Text>
               </View>
             </View>
-          </View>
+          </Animatable.View>
 
           {/* Headline */}
-          <View style={styles.headlineBlock}>
+          <Animatable.View animation="fadeInUp" duration={600} delay={300} style={styles.headlineBlock}>
             <Text style={styles.headlineText}>GET YOUR CARD</Text>
             <Text style={styles.headlineText}>FOR $7.</Text>
             <Text style={styles.subheadText}>
               No subscription - a one-time fee to cover costs.
             </Text>
-          </View>
+          </Animatable.View>
 
           {/* Features Block */}
           <View style={styles.featuresBlock}>
             {/* Feature 1 */}
-            <View style={styles.featureRow}>
+            <Animatable.View animation="fadeInUp" duration={500} delay={400} style={styles.featureRow}>
               <View style={styles.iconCircle}>
                 <Feather name="globe" size={18} color="#ffffff" />
               </View>
@@ -64,10 +65,10 @@ export default function PricingScreen() {
                 <Text style={styles.featureTitle}>Spend in 150+ currencies</Text>
                 <Text style={styles.featureDesc}>One card for spending and withdrawing at the real exchange rate.</Text>
               </View>
-            </View>
+            </Animatable.View>
 
             {/* Feature 2 */}
-            <View style={styles.featureRow}>
+            <Animatable.View animation="fadeInUp" duration={500} delay={500} style={styles.featureRow}>
               <View style={styles.iconCircle}>
                 <Feather name="zap" size={18} color="#ffffff" />
               </View>
@@ -75,10 +76,10 @@ export default function PricingScreen() {
                 <Text style={styles.featureTitle}>Start spending instantly</Text>
                 <Text style={styles.featureDesc}>Card details ready as soon as you order - set up digital wallets too.</Text>
               </View>
-            </View>
+            </Animatable.View>
 
             {/* Feature 3 */}
-            <View style={styles.featureRow}>
+            <Animatable.View animation="fadeInUp" duration={500} delay={600} style={styles.featureRow}>
               <View style={styles.iconCircle}>
                 <Feather name="navigation" size={18} color="#ffffff" />
               </View>
@@ -86,10 +87,10 @@ export default function PricingScreen() {
                 <Text style={styles.featureTitle}>Travel with your card</Text>
                 <Text style={styles.featureDesc}>Get travel tips and help for making the most of your money abroad.</Text>
               </View>
-            </View>
+            </Animatable.View>
 
             {/* Feature 4 */}
-            <View style={styles.featureRow}>
+            <Animatable.View animation="fadeInUp" duration={500} delay={700} style={styles.featureRow}>
               <View style={styles.iconCircle}>
                 <Feather name="dollar-sign" size={18} color="#ffffff" />
               </View>
@@ -97,10 +98,10 @@ export default function PricingScreen() {
                 <Text style={styles.featureTitle}>Withdraw from ATMs anywhere</Text>
                 <Text style={styles.featureDesc}>Withdrawal fees apply if you go over your fee-free limit.</Text>
               </View>
-            </View>
+            </Animatable.View>
 
             {/* Feature 5 */}
-            <View style={styles.featureRow}>
+            <Animatable.View animation="fadeInUp" duration={500} delay={800} style={styles.featureRow}>
               <View style={styles.iconCircle}>
                 <Feather name="bell" size={18} color="#ffffff" />
               </View>
@@ -108,17 +109,17 @@ export default function PricingScreen() {
                 <Text style={styles.featureTitle}>Get instant notifications</Text>
                 <Text style={styles.featureDesc}>See what you've spent and track in-app at home, abroad, and on the go.</Text>
               </View>
-            </View>
+            </Animatable.View>
 
           </View>
         </ScrollView>
 
         {/* Footer */}
-        <View style={styles.footer}>
+        <Animatable.View animation="fadeInUp" duration={600} delay={900} style={styles.footer}>
           <TouchableOpacity style={styles.ctaButton} onPress={() => router.navigate('/(tabs)')}>
             <Text style={styles.ctaText}>Order your card</Text>
           </TouchableOpacity>
-        </View>
+        </Animatable.View>
       </View>
     </SafeAreaView>
   );

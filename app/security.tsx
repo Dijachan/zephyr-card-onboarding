@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
+import * as Animatable from 'react-native-animatable';
 
 export default function SecurityScreen() {
   const router = useRouter();
@@ -13,52 +13,47 @@ export default function SecurityScreen() {
           
           <View style={styles.contentTop}>
             {/* Navigation Row */}
-            <View style={styles.navigationRow}>
+            <Animatable.View animation="fadeInDown" duration={600} style={styles.navigationRow}>
               <TouchableOpacity onPress={() => router.back()} style={styles.closeButton}>
-                <Feather name="x-circle" size={24} color="#0f172a" />
+                <Feather name="arrow-left" size={24} color="#0f172a" />
               </TouchableOpacity>
-            </View>
+            </Animatable.View>
 
             {/* Security Headlines */}
-            <View style={styles.securityHeadlines}>
-              <Text style={styles.headlineText}>YOUR MONEY.</Text>
-              <Text style={styles.headlineText}>ALWAYS SECURE.</Text>
-              <Text style={styles.subheadText}>Instantly freeze and unfreeze your card whenever you need.</Text>
-            </View>
+            <Animatable.View animation="fadeInUp" duration={800} delay={100} style={styles.securityHeadlines}>
+              <Text style={styles.headlineText}>FREEZE IN A TAP.</Text>
+              <Text style={styles.subheadText}>
+                Don't panic if you misplace your card. You can freeze it instantly in the app.
+              </Text>
+            </Animatable.View>
 
             {/* Card Freeze Visualizer */}
             <View style={styles.cardFreezeVisualizer}>
               
               {/* Frozen Card */}
-              <View style={styles.frozenCard}>
-                <LinearGradient 
-                  colors={['rgba(209,250,229,0.18)', 'rgba(255,255,255,0.22)']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={StyleSheet.absoluteFill}
-                />
+              <Animatable.View animation="zoomIn" duration={1000} delay={300} style={styles.frozenCard}>
                 <Image 
-                  source={require('../assets/images/frozen-card.png')} 
+                  source={require('../assets/images/wallet-card.png')} 
                   style={styles.frozenCardImage}
                 />
                 <Text style={styles.frozenBadgeText}>FROZEN</Text>
                 <Text style={styles.frozenCardNumber}>•••• 8820</Text>
-              </View>
+              </Animatable.View>
 
               {/* Lock Action Badge */}
-              <View style={styles.lockActionBadge}>
+              <Animatable.View animation="zoomIn" duration={600} delay={700} style={styles.lockActionBadge}>
                 <Feather name="lock" size={24} color="#0891b2" style={styles.lockIcon} />
-              </View>
+              </Animatable.View>
 
             </View>
           </View>
 
           {/* Footer Group */}
-          <View style={styles.footerGroup}>
+          <Animatable.View animation="fadeInUp" duration={800} delay={500} style={styles.footerGroup}>
             <TouchableOpacity style={styles.ctaButton} onPress={() => router.push('/loading')}>
               <Text style={styles.ctaText}>Order your card</Text>
             </TouchableOpacity>
-          </View>
+          </Animatable.View>
 
         </View>
       </SafeAreaView>

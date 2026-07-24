@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import * as Animatable from 'react-native-animatable';
 
 export default function OrderCardScreen() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function OrderCardScreen() {
       
       <SafeAreaView style={styles.safeArea}>
         {/* Top Header Group */}
-        <View style={styles.headerGroup}>
+        <Animatable.View animation="fadeInDown" duration={600} style={styles.headerGroup}>
           <View style={styles.navigationRow}>
             <TouchableOpacity onPress={() => router.back()} style={styles.closeButton}>
               <Feather name="x-circle" size={24} color="#0f172a" />
@@ -33,10 +34,10 @@ export default function OrderCardScreen() {
             <Feather name="chevron-down" size={20} color="#0891b2" style={styles.chevron2} />
             <Feather name="chevron-down" size={20} color="#0891b2" style={styles.chevron3} />
           </View>
-        </View>
+        </Animatable.View>
 
         {/* Footer Group */}
-        <View style={styles.footerGroup}>
+        <Animatable.View animation="fadeInUp" duration={800} delay={500} style={styles.footerGroup}>
           <TouchableOpacity 
             style={styles.ctaButton}
             onPress={() => router.push('/activity')}
@@ -44,7 +45,7 @@ export default function OrderCardScreen() {
           >
             <Text style={styles.ctaText}>Order your card</Text>
           </TouchableOpacity>
-        </View>
+        </Animatable.View>
       </SafeAreaView>
     </ImageBackground>
   );
