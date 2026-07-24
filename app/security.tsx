@@ -55,7 +55,7 @@ export default function SecurityScreen() {
 
           {/* Footer Group */}
           <View style={styles.footerGroup}>
-            <TouchableOpacity style={styles.ctaButton} onPress={() => router.push('/order-card')}>
+            <TouchableOpacity style={styles.ctaButton} onPress={() => router.push('/loading')}>
               <Text style={styles.ctaText}>Order your card</Text>
             </TouchableOpacity>
           </View>
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white', // Ensure shadow renders
   },
   frozenCardImage: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     width: '100%',
     height: '100%',
     opacity: 0.22,
