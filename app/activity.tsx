@@ -88,8 +88,8 @@ export default function ActivityScreen() {
 
           {/* Footer Action */}
           <View style={styles.footerGroup}>
-            <TouchableOpacity style={styles.ctaButton} onPress={() => router.push('/(tabs)')}>
-              <Text style={styles.ctaText}>Continue to dashboard</Text>
+            <TouchableOpacity style={styles.ctaButton} onPress={() => router.push('/digital-wallets')}>
+              <Text style={styles.ctaText}>Next</Text>
               <Feather name="arrow-right" size={20} color="#ffffff" style={styles.ctaIcon} />
             </TouchableOpacity>
           </View>

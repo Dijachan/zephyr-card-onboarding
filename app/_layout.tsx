@@ -57,6 +57,7 @@ function RootLayoutNav() {
         <Stack.Screen name="order-card" options={{ headerShown: false }} />
         <Stack.Screen name="activity" options={{ headerShown: false }} />
         <Stack.Screen name="digital-wallets" options={{ headerShown: false }} />
+        <Stack.Screen name="security" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
     </ThemeProvider>

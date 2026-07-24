@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -42,25 +42,29 @@ export default function DigitalWalletsScreen() {
               
               {/* Front Card */}
               <View style={styles.cardFront}>
-                <ImageBackground 
+                <LinearGradient 
+                  colors={['rgba(236,254,255,0.9)', 'rgba(165,243,252,0.9)']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={StyleSheet.absoluteFill}
+                />
+                <Image 
                   source={require('../assets/images/wallet-card.png')} 
-                  style={styles.cardFrontImageContainer}
-                  imageStyle={styles.cardFrontImage}
-                >
-                  <LinearGradient 
-                    colors={['rgba(236,254,255,0.9)', 'rgba(165,243,252,0.9)']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.cardFrontGradient}
-                  />
-                  <View style={styles.cardOverlayContent}>
-                    <View style={styles.cardLogoRow}>
-                      <View style={styles.cardChip} />
-                      <Text style={styles.cardLogoText}>zephyr</Text>
-                    </View>
-                    <Text style={styles.cardNumberText}>•••• 8820</Text>
+                  style={styles.cardFrontImage}
+                />
+                
+                <View style={styles.cardOverlayContent}>
+                  <View style={styles.cardLogoRow}>
+                    <LinearGradient 
+                      colors={['rgba(165,243,252,0.08)', 'rgba(255,255,255,0.18)']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={styles.cardChip}
+                    />
+                    <Text style={styles.cardLogoText}>zephyr</Text>
                   </View>
-                </ImageBackground>
+                  <Text style={styles.cardNumberText}>•••• 8820</Text>
+                </View>
               </View>
 
             </View>
@@ -82,9 +86,9 @@ export default function DigitalWalletsScreen() {
 
           {/* Footer Group */}
           <View style={styles.footerGroup}>
-            <TouchableOpacity style={styles.ctaPill}>
-              <FontAwesome5 name="apple" size={18} color="#ffffff" />
-              <Text style={styles.ctaText}>Add to Apple Wallet</Text>
+            <TouchableOpacity style={styles.ctaPill} onPress={() => router.push('/security')}>
+              <Text style={styles.ctaText}>Next</Text>
+              <Feather name="arrow-right" size={20} color="#ffffff" />
             </TouchableOpacity>
           </View>
 
@@ -139,12 +143,12 @@ const styles = StyleSheet.create({
   stackedCardsContainer: {
     width: 342,
     height: 220,
-    alignItems: 'center',
     position: 'relative',
   },
   cardBack: {
     position: 'absolute',
     top: 0,
+    left: 41,
     width: 260,
     height: 160,
     borderRadius: 12,
@@ -154,6 +158,7 @@ const styles = StyleSheet.create({
   cardMiddle: {
     position: 'absolute',
     top: 20,
+    left: 21,
     width: 300,
     height: 170,
     borderRadius: 14,
@@ -163,6 +168,7 @@ const styles = StyleSheet.create({
   cardFront: {
     position: 'absolute',
     top: 40,
+    left: 0,
     width: 342,
     height: 180,
     borderRadius: 16,
@@ -170,22 +176,19 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255,255,255,0.3)',
     overflow: 'hidden',
   },
-  cardFrontImageContainer: {
-    flex: 1,
-  },
   cardFrontImage: {
-    opacity: 0.5,
-  },
-  cardFrontGradient: {
     ...StyleSheet.absoluteFill,
-    opacity: 0.2, // Subtle overlay to match the bright vibe
-    zIndex: 1,
+    width: '100%',
+    height: '100%',
+    opacity: 0.5,
+    resizeMode: 'cover',
+    zIndex: 2,
   },
   cardOverlayContent: {
-    flex: 1,
-    padding: 24,
+    ...StyleSheet.absoluteFill,
+    padding: 23,
     justifyContent: 'space-between',
-    zIndex: 2,
+    zIndex: 3,
   },
   cardLogoRow: {
     flexDirection: 'row',
@@ -195,8 +198,9 @@ const styles = StyleSheet.create({
   cardChip: {
     width: 36,
     height: 24,
-    backgroundColor: 'rgba(255,255,255,0.8)',
     borderRadius: 4,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.3)',
   },
   cardLogoText: {
     color: '#03242c',
@@ -210,7 +214,7 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
   },
   successBadgeContainer: {
-    marginTop: -24, // Pull up to overlap the cards
+    paddingTop: 24,
     alignItems: 'center',
     zIndex: 20,
   },
@@ -231,7 +235,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 12,
     paddingBottom: 24,
-    gap: 8,
+    gap: 16,
   },
   headlineText: {
     fontFamily: 'ClashDisplay-Bold',
@@ -244,7 +248,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
     color: 'rgba(255,255,255,0.8)',
-    marginTop: 8,
   },
   footerGroup: {
     paddingHorizontal: 24,
@@ -259,7 +262,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255,255,255,0.4)',
     borderRadius: 28,
     height: 56,
-    gap: 12,
+    gap: 8,
   },
   ctaText: {
     fontFamily: 'GeneralSans-Semibold',
