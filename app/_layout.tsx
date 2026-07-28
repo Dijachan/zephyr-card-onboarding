@@ -55,6 +55,13 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="order-card" options={{ headerShown: false }} />
+        <Stack.Screen name="card-checklist" options={{ headerShown: false }} />
+        <Stack.Screen name="delivery-address" options={{ headerShown: false }} />
+        <Stack.Screen name="choose-name" options={{ headerShown: false }} />
+        <Stack.Screen name="set-pin" options={{ headerShown: false }} />
+        <Stack.Screen name="repeat-pin" options={{ headerShown: false }} />
+        <Stack.Screen name="purpose-question" options={{ headerShown: false }} />
+        <Stack.Screen name="usage-options" options={{ headerShown: false }} />
         <Stack.Screen name="activity" options={{ headerShown: false }} />
         <Stack.Screen name="digital-wallets" options={{ headerShown: false }} />
         <Stack.Screen name="security" options={{ headerShown: false }} />

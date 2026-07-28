@@ -116,7 +116,7 @@ export default function PricingScreen() {
 
         {/* Footer */}
         <Animatable.View animation="fadeInUp" duration={600} delay={900} style={styles.footer}>
-          <TouchableOpacity style={styles.ctaButton} onPress={() => router.navigate('/(tabs)')}>
+          <TouchableOpacity style={styles.ctaButton} onPress={() => router.push('/card-checklist')}>
             <Text style={styles.ctaText}>Order your card</Text>
           </TouchableOpacity>
         </Animatable.View>
