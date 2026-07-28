@@ -67,6 +67,16 @@ function RootLayoutNav() {
         <Stack.Screen name="security" options={{ headerShown: false }} />
         <Stack.Screen name="loading" options={{ headerShown: false }} />
         <Stack.Screen name="pricing" options={{ headerShown: false }} />
+        <Stack.Screen name="purpose-confirmed" options={{ headerShown: false }} />
+        <Stack.Screen name="questions-intro" options={{ headerShown: false }} />
+        <Stack.Screen name="account-type" options={{ headerShown: false }} />
+        <Stack.Screen name="account-options" options={{ headerShown: false }} />
+        <Stack.Screen name="yearly-volume" options={{ headerShown: false }} />
+        <Stack.Screen name="volume-options" options={{ headerShown: false }} />
+        <Stack.Screen name="verify-identity" options={{ headerShown: false }} />
+        <Stack.Screen name="upload-id-form" options={{ headerShown: false }} />
+        <Stack.Screen name="document-type" options={{ headerShown: false }} />
+        <Stack.Screen name="document-upload" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
     </ThemeProvider>

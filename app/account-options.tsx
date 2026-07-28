@@ -1,43 +1,52 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ScrollView, TextInput } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import * as Animatable from 'react-native-animatable';
 
-const USAGE_OPTIONS = [
+const OPTIONS = [
+  'Sending money to friends or family',
+  'Moving savings',
+  'General monthly living expenses',
   'Paying for goods or services abroad',
-  'Receiving salary in a different currency',
-  'Sending money to family or friends',
-  'Investing in international markets',
-  'Managing business expenses',
-  'Holding foreign currency balances',
+  'Repaying a mortgage, bank loan, or similar',
+  'Paying bills like rent or utilities',
+  'Receiving a salary or pension',
+  'Making investments',
 ];
 
-export default function UsageOptionsScreen() {
+export default function AccountOptionsScreen() {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedOption, setSelectedOption] = useState(USAGE_OPTIONS[0]);
+  const [selectedOption, setSelectedOption] = useState<string>('Paying for goods or services abroad');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const filteredOptions = USAGE_OPTIONS.filter((opt) =>
+  const filteredOptions = OPTIONS.filter((opt) =>
     opt.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleConfirm = () => {
+    // Navigate back to account type with the chosen selection
+    router.replace({
+      pathname: '/account-type',
+      params: { selected: selectedOption }
+    });
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.topSection}>
-          <Animatable.View animation="fadeInDown" duration={500} style={styles.navBar}>
-            <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-              <Feather name="chevron-left" size={24} color="#0f172a" />
+          {/* Header */}
+          <View style={styles.headerRow}>
+            <TouchableOpacity onPress={() => router.back()} style={styles.closeButton}>
+              <Feather name="x-circle" size={24} color="#0f172a" />
             </TouchableOpacity>
-          </Animatable.View>
-
-          <Animatable.View animation="fadeIn" duration={600} delay={100} style={styles.header}>
-            <Text style={styles.headlineText}>Tell us what you&apos;re using Zephyr for</Text>
-          </Animatable.View>
+            <Text style={styles.headerTitle}>Select one that fits you best</Text>
+            <View style={styles.placeholderBox} />
+          </View>
 
           {/* Search Input */}
-          <Animatable.View animation="fadeInUp" duration={600} delay={200} style={styles.searchContainer}>
+          <View style={styles.searchContainer}>
             <View style={styles.searchBar}>
               <Feather name="search" size={18} color="#94a3b8" />
               <TextInput
@@ -48,45 +57,44 @@ export default function UsageOptionsScreen() {
                 onChangeText={setSearchQuery}
               />
               {searchQuery.length > 0 && (
-                <TouchableOpacity onPress={() => setSearchQuery('')} style={styles.clearButton}>
-                  <Feather name="x-circle" size={18} color="#94a3b8" />
+                <TouchableOpacity onPress={() => setSearchQuery('')}>
+                  <Feather name="x-circle" size={16} color="#94a3b8" />
                 </TouchableOpacity>
               )}
             </View>
-          </Animatable.View>
+          </View>
 
           {/* Options List */}
           <ScrollView style={styles.scrollView} contentContainerStyle={styles.listContainer}>
-            <Animatable.View animation="fadeInUp" duration={600} delay={300} style={styles.optionsList}>
-              {filteredOptions.map((option, index) => {
-                const isSelected = selectedOption === option;
-                return (
-                  <TouchableOpacity
-                    key={index}
-                    style={[styles.optionRow, isSelected && styles.optionRowSelected]}
-                    onPress={() => setSelectedOption(option)}
-                    activeOpacity={0.8}
-                  >
-                    <Text style={[styles.optionText, isSelected && styles.optionTextSelected]}>
-                      {option}
-                    </Text>
-                    <View style={[styles.radioOuter, isSelected && styles.radioOuterSelected]}>
-                      {isSelected && <View style={styles.radioInner} />}
-                    </View>
-                  </TouchableOpacity>
-                );
-              })}
-            </Animatable.View>
+            {filteredOptions.map((option, index) => {
+              const isSelected = selectedOption === option;
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={[styles.optionRow, isSelected && styles.optionRowSelected]}
+                  activeOpacity={0.7}
+                  onPress={() => setSelectedOption(option)}
+                >
+                  <Text style={[styles.optionText, isSelected && styles.optionTextSelected]}>
+                    {option}
+                  </Text>
+                  <View style={[styles.radioOuter, isSelected && styles.radioOuterSelected]}>
+                    {isSelected && <View style={styles.radioInner} />}
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
           </ScrollView>
         </View>
 
-        <Animatable.View animation="fadeInUp" duration={600} delay={400} style={styles.footer}>
+        {/* Footer CTA */}
+        <Animatable.View animation="fadeInUp" duration={500} style={styles.footer}>
           <TouchableOpacity 
             style={styles.ctaButton}
             activeOpacity={0.9}
-            onPress={() => router.push('/purpose-confirmed')}
+            onPress={handleConfirm}
           >
-            <Text style={styles.ctaText}>Confirm & Complete</Text>
+            <Text style={styles.ctaText}>Confirm selection</Text>
             <Feather name="check" size={20} color="#ffffff" style={styles.ctaIcon} />
           </TouchableOpacity>
         </Animatable.View>
@@ -107,31 +115,32 @@ const styles = StyleSheet.create({
   topSection: {
     flex: 1,
   },
-  navBar: {
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingTop: 8,
-    paddingBottom: 4,
+    height: 56,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f5f9',
   },
-  backButton: {
+  closeButton: {
     width: 40,
     height: 40,
-    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  header: {
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-  },
-  headlineText: {
-    fontFamily: 'ClashDisplay-Bold',
-    fontSize: 28,
-    lineHeight: 34,
+  headerTitle: {
+    fontFamily: 'GeneralSans-Bold',
+    fontSize: 16,
     color: '#0f172a',
+  },
+  placeholderBox: {
+    width: 40,
   },
   searchContainer: {
     paddingHorizontal: 24,
-    paddingVertical: 10,
+    paddingVertical: 12,
   },
   searchBar: {
     flexDirection: 'row',
@@ -140,9 +149,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8fafc',
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    gap: 10,
+    borderRadius: 14,
+    paddingHorizontal: 16,
+    gap: 12,
   },
   searchInput: {
     flex: 1,
@@ -151,18 +160,12 @@ const styles = StyleSheet.create({
     color: '#0f172a',
     padding: 0,
   },
-  clearButton: {
-    padding: 4,
-  },
   scrollView: {
     flex: 1,
   },
   listContainer: {
     paddingHorizontal: 24,
     paddingBottom: 20,
-    paddingTop: 10,
-  },
-  optionsList: {
     gap: 12,
   },
   optionRow: {
@@ -179,14 +182,14 @@ const styles = StyleSheet.create({
   },
   optionRowSelected: {
     borderColor: '#0891b2',
-    backgroundColor: '#f0fdf4',
+    backgroundColor: '#ecfeff',
   },
   optionText: {
     flex: 1,
     fontFamily: 'GeneralSans-Medium',
     fontSize: 15,
     color: '#334155',
-    paddingRight: 10,
+    paddingRight: 12,
   },
   optionTextSelected: {
     fontFamily: 'GeneralSans-Semibold',
