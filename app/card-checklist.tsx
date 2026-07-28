@@ -45,7 +45,7 @@ export default function CardChecklistScreen() {
             {/* Step 2: Set up PIN (Inactive) */}
             <View style={styles.row}>
               <View style={styles.iconBoxInactive}>
-                <Feather name="x-circle" size={18} color="#94a3b8" />
+                <Feather name="lock" size={18} color="#94a3b8" />
               </View>
               <Text style={styles.rowTextInactive}>Set up your PIN</Text>
             </View>
@@ -55,7 +55,7 @@ export default function CardChecklistScreen() {
             {/* Step 3: Verify Identity (Inactive) */}
             <View style={styles.row}>
               <View style={styles.iconBoxInactive}>
-                <Feather name="x-circle" size={18} color="#94a3b8" />
+                <Feather name="user-check" size={18} color="#94a3b8" />
               </View>
               <Text style={styles.rowTextInactive}>Verify your identity</Text>
               <TouchableOpacity style={styles.helpButton}>
