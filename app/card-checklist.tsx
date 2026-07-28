@@ -13,7 +13,7 @@ export default function CardChecklistScreen() {
         {/* Navigation Bar */}
         <Animatable.View animation="fadeInDown" duration={500} style={styles.navBar}>
           <TouchableOpacity onPress={() => router.back()} style={styles.closeButton}>
-            <Feather name="x" size={20} color="#0f172a" />
+            <Feather name="x-circle" size={24} color="#0f172a" />
           </TouchableOpacity>
         </Animatable.View>
 
@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#f8fafc',
     alignItems: 'center',
     justifyContent: 'center',
   },
