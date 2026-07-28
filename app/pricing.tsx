@@ -118,6 +118,7 @@ export default function PricingScreen() {
         <Animatable.View animation="fadeInUp" duration={600} delay={900} style={styles.footer}>
           <TouchableOpacity style={styles.ctaButton} onPress={() => router.push('/card-checklist')}>
             <Text style={styles.ctaText}>Order your card</Text>
+            <Feather name="arrow-right" size={20} color="#ffffff" style={styles.ctaIcon} />
           </TouchableOpacity>
         </Animatable.View>
       </View>
@@ -260,20 +261,27 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   ctaButton: {
-    height: 56,
-    backgroundColor: '#e5702b',
+    backgroundColor: 'rgba(229,112,43,0.85)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.3)',
     borderRadius: 28,
+    height: 56,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000000',
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 6,
-    elevation: 4,
+    elevation: 3,
+    gap: 8,
   },
   ctaText: {
     fontFamily: 'GeneralSans-Semibold',
     fontSize: 16,
     color: '#ffffff',
+  },
+  ctaIcon: {
+    marginTop: 2,
   },
 });
