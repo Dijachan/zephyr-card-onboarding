@@ -77,6 +77,10 @@ function RootLayoutNav() {
         <Stack.Screen name="upload-id-form" options={{ headerShown: false }} />
         <Stack.Screen name="document-type" options={{ headerShown: false }} />
         <Stack.Screen name="document-upload" options={{ headerShown: false }} />
+        <Stack.Screen name="selfie-with-id" options={{ headerShown: false }} />
+        <Stack.Screen name="address-proof" options={{ headerShown: false }} />
+        <Stack.Screen name="processing" options={{ headerShown: false }} />
+        <Stack.Screen name="order-confirmation" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
     </ThemeProvider>

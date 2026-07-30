@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ScrollView, Image } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import * as Animatable from 'react-native-animatable';
 
-export default function DocumentUploadScreen() {
+export default function DocumentUploadBackScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
   
   const docType = params.docType ? (params.docType as string) : 'National ID';
-  const [frontUploaded, setFrontUploaded] = useState(false);
-  const [backUploaded, setBackUploaded] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
 
-  const canContinue = frontUploaded && backUploaded;
+  const handleToggleUpload = () => {
+    setUploaded(prev => !prev);
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        <View style={styles.topSection}>
           {/* Navigation Bar */}
           <Animatable.View animation="fadeInDown" duration={500} style={styles.navBar}>
             <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
@@ -40,67 +41,45 @@ export default function DocumentUploadScreen() {
             </TouchableOpacity>
           </Animatable.View>
 
+          {/* Upload Drop Zone */}
           <Animatable.View animation="fadeInUp" duration={600} delay={200} style={styles.uploadContainer}>
-            {/* Front Side Upload */}
             <TouchableOpacity 
-              style={[styles.uploadBox, frontUploaded && styles.uploadBoxDone]} 
+              style={[styles.uploadBox, uploaded && styles.uploadBoxDone]} 
               activeOpacity={0.8}
-              onPress={() => setFrontUploaded(!frontUploaded)}
+              onPress={handleToggleUpload}
             >
-              {frontUploaded ? (
-                <View style={styles.previewContainer}>
-                  <View style={styles.previewImageMock}>
-                    <Feather name="image" size={32} color="#10b981" style={{ opacity: 0.5 }} />
-                  </View>
-                  <Text style={styles.uploadTextDone}>Front side attached</Text>
-                  <Text style={styles.tapToChangeText}>Tap to replace</Text>
-                </View>
-              ) : (
-                <>
-                  <View style={styles.iconCircle}>
-                    <Feather name="upload-cloud" size={32} color="#0891b2" />
-                  </View>
-                  <Text style={styles.uploadText}>Upload the front side of your document</Text>
-                </>
+              <View style={[styles.iconCircle, uploaded && styles.iconCircleDone]}>
+                <Feather 
+                  name={uploaded ? "check-circle" : "upload-cloud"} 
+                  size={36} 
+                  color={uploaded ? "#10b981" : "#0891b2"} 
+                />
+              </View>
+              <Text style={[styles.uploadText, uploaded && styles.uploadTextDone]}>
+                {uploaded ? `${docType} back side attached` : 'Upload the back side of your document'}
+              </Text>
+              {uploaded && (
+                <Text style={styles.tapToChangeText}>Tap to replace file</Text>
               )}
             </TouchableOpacity>
 
-            {/* Back Side Upload */}
-            <TouchableOpacity 
-              style={[styles.uploadBox, backUploaded && styles.uploadBoxDone]} 
-              activeOpacity={0.8}
-              onPress={() => setBackUploaded(!backUploaded)}
-            >
-              {backUploaded ? (
-                <View style={styles.previewContainer}>
-                  <View style={styles.previewImageMock}>
-                    <Feather name="image" size={32} color="#10b981" style={{ opacity: 0.5 }} />
-                  </View>
-                  <Text style={styles.uploadTextDone}>Back side attached</Text>
-                  <Text style={styles.tapToChangeText}>Tap to replace</Text>
-                </View>
-              ) : (
-                <>
-                  <View style={styles.iconCircle}>
-                    <Feather name="upload-cloud" size={32} color="#0891b2" />
-                  </View>
-                  <Text style={styles.uploadText}>Upload the back side of your document</Text>
-                </>
-              )}
-            </TouchableOpacity>
+            {/* Pagination Dots - Second Dot Active */}
+            <View style={styles.pagination}>
+              <View style={styles.dot} />
+              <View style={[styles.dot, styles.dotActive]} />
+            </View>
           </Animatable.View>
-        </ScrollView>
+        </View>
 
         {/* Footer CTA */}
-        <Animatable.View animation="fadeInUp" duration={600} delay={300} style={styles.footer}>
+        <Animatable.View animation="fadeInUp" duration={600} delay={400} style={styles.footer}>
           <TouchableOpacity 
-            style={[styles.ctaButton, !canContinue && styles.ctaButtonDisabled]}
+            style={styles.ctaButton}
             activeOpacity={0.9}
-            disabled={!canContinue}
-            onPress={() => router.push({ pathname: '/selfie-with-id' })}
+            onPress={() => router.push('/selfie-with-id')}
           >
-            <Text style={[styles.ctaText, !canContinue && styles.ctaTextDisabled]}>Continue</Text>
-            <Feather name="arrow-right" size={20} color={canContinue ? "#ffffff" : "#94a3b8"} style={styles.ctaIcon} />
+            <Text style={styles.ctaText}>Continue</Text>
+            <Feather name="arrow-right" size={20} color="#ffffff" style={styles.ctaIcon} />
           </TouchableOpacity>
         </Animatable.View>
       </View>
@@ -116,9 +95,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
-  },
-  scrollContent: {
-    paddingBottom: 40,
   },
   topSection: {
     flex: 1,
@@ -163,11 +139,12 @@ const styles = StyleSheet.create({
   uploadContainer: {
     paddingHorizontal: 24,
     paddingTop: 24,
-    gap: 20,
+    alignItems: 'center',
+    gap: 24,
   },
   uploadBox: {
     width: '100%',
-    height: 160,
+    minHeight: 200,
     borderRadius: 20,
     borderWidth: 2,
     borderColor: '#94a3b8',
@@ -175,8 +152,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8fafc',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
-    gap: 12,
+    padding: 24,
+    gap: 16,
   },
   uploadBoxDone: {
     borderColor: '#10b981',
@@ -184,37 +161,23 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
   },
   iconCircle: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
     backgroundColor: '#ecfeff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  previewContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-  },
-  previewImageMock: {
-    width: 64,
-    height: 44,
-    borderRadius: 8,
+  iconCircleDone: {
     backgroundColor: '#d1fae5',
-    borderWidth: 1,
-    borderColor: '#34d399',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   uploadText: {
     fontFamily: 'GeneralSans-Semibold',
-    fontSize: 15,
+    fontSize: 16,
     color: '#334155',
     textAlign: 'center',
   },
   uploadTextDone: {
-    fontFamily: 'GeneralSans-Semibold',
-    fontSize: 15,
     color: '#065f46',
   },
   tapToChangeText: {
@@ -222,13 +185,27 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#059669',
   },
+  pagination: {
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#e2e8f0',
+  },
+  dotActive: {
+    width: 24,
+    backgroundColor: '#0891b2',
+  },
   footer: {
     paddingHorizontal: 24,
     paddingBottom: 24,
     paddingTop: 16,
     borderTopWidth: 1,
     borderTopColor: '#f8fafc',
-    backgroundColor: '#ffffff',
   },
   ctaButton: {
     backgroundColor: 'rgba(229,112,43,0.85)',
@@ -246,19 +223,10 @@ const styles = StyleSheet.create({
     elevation: 3,
     gap: 8,
   },
-  ctaButtonDisabled: {
-    backgroundColor: '#f1f5f9',
-    borderColor: '#e2e8f0',
-    elevation: 0,
-    shadowOpacity: 0,
-  },
   ctaText: {
     fontFamily: 'GeneralSans-Semibold',
     fontSize: 16,
     color: '#ffffff',
-  },
-  ctaTextDisabled: {
-    color: '#94a3b8',
   },
   ctaIcon: {
     marginTop: 2,
