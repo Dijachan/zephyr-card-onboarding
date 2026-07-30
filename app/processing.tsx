@@ -16,7 +16,7 @@ export default function ProcessingScreen() {
   }, [router]);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.safeArea}>
       <View style={styles.container}>
         {/* Reliable absolute image instead of ImageBackground */}
         <Image 
@@ -36,27 +36,32 @@ export default function ProcessingScreen() {
           </View>
         </Animatable.View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#0f172a',
   },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
+    backgroundColor: '#0f172a',
   },
   backgroundImage: {
     ...StyleSheet.absoluteFillObject,
     width: '100%',
     height: '100%',
+    opacity: 0.3,
   },
   centerContainer: {
+    position: 'absolute',
+    top: '38%',
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 10,

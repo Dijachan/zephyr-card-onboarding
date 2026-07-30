@@ -22,7 +22,7 @@ export default function OrderConfirmationScreen() {
           {/* Navigation Bar */}
           <Animatable.View animation="fadeInDown" duration={500} style={styles.navBar}>
             <TouchableOpacity onPress={() => router.back()} style={styles.closeButton}>
-              <Feather name="x-circle" size={24} color="#0f172a" />
+              <Feather name="x" size={20} color="#0f172a" />
             </TouchableOpacity>
           </Animatable.View>
 
@@ -129,7 +129,6 @@ export default function OrderConfirmationScreen() {
             onPress={() => router.replace('/(tabs)/card')}
           >
             <Text style={styles.ctaText}>Add card</Text>
-            <Feather name="check" size={20} color="#ffffff" style={styles.ctaIcon} />
           </TouchableOpacity>
         </Animatable.View>
       </View>
@@ -157,7 +156,9 @@ const styles = StyleSheet.create({
   closeButton: {
     width: 40,
     height: 40,
-    alignItems: 'flex-start',
+    borderRadius: 20,
+    backgroundColor: '#f1f5f9',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   header: {
@@ -292,13 +293,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   totalLabel: {
-    fontFamily: 'GeneralSans-Semibold',
-    fontSize: 18,
+    fontFamily: 'GeneralSans-Bold',
+    fontSize: 16,
     color: '#0f172a',
   },
   totalValue: {
-    fontFamily: 'ClashDisplay-Semibold',
-    fontSize: 22,
+    fontFamily: 'GeneralSans-Bold',
+    fontSize: 16,
     color: '#0f172a',
   },
   footer: {
