@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, ScrollView, TouchableOpacity, Image, Platform } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, ScrollView, TouchableOpacity, Image, ImageBackground, Platform } from 'react-native';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -17,37 +17,35 @@ export default function CardScreen() {
           </View>
         </View>
 
-        {/* Card Mockup container */}
         <View style={styles.cardContainer}>
-          <View style={styles.zephyrCard}>
-            {/* Background elements */}
-            <View style={styles.cardBgWrapper}>
-              <LinearGradient
-                colors={['rgba(207,250,254,0.2)', 'rgba(165,243,252,0.2)']}
-                style={StyleSheet.absoluteFill}
-              />
-              {/* Replace with actual background texture if available */}
-              <Image 
-                source={require('../../assets/images/wallet-card.png')} 
-                style={styles.cardBgImage}
-              />
-            </View>
+          <ImageBackground 
+            source={require('../../assets/images/wallet-card.png')} 
+            style={styles.zephyrCard} 
+            imageStyle={styles.cardBgImage}
+          >
+            <LinearGradient
+              colors={['rgba(207,250,254,0.2)', 'rgba(165,243,252,0.2)']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={[StyleSheet.absoluteFill, { zIndex: 1 }]}
+            />
             
-            {/* Huge ZEPHYR text overlay */}
-            <Text style={styles.hugeOverlayText}>ZEPHYR</Text>
+            <Text style={[styles.hugeOverlayText, { zIndex: 2 }]}>ZEPHYR</Text>
             
-            {/* Card Content Top */}
-            <View style={styles.cardTopRow}>
-              <Text style={styles.cardBrand}>ZEPHYR</Text>
-              <View style={styles.cardChip} />
+            <View style={[styles.cardContent, { zIndex: 3 }]}>
+              <View style={styles.cardTopRow}>
+                <Text style={styles.cardBrand}>ZEPHYR</Text>
+                <View style={styles.cardChip} />
+              </View>
+              
+              <View style={styles.cardBottomRow}>
+                <View style={styles.cardHolderContainer}>
+                  <Text style={styles.cardHolder}>Sarah Jenkins</Text>
+                </View>
+                <Text style={styles.cardType}>VISA</Text>
+              </View>
             </View>
-            
-            {/* Card Content Bottom */}
-            <View style={styles.cardBottomRow}>
-              <Text style={styles.cardHolder}>Sarah Jenkins</Text>
-              <Text style={styles.cardType}>VISA</Text>
-            </View>
-          </View>
+          </ImageBackground>
         </View>
 
         {/* Card Metadata */}
@@ -126,7 +124,6 @@ const styles = StyleSheet.create({
   cardContainer: {
     paddingHorizontal: 24,
     width: '100%',
-    marginBottom: 16,
   },
   zephyrCard: {
     width: '100%',
@@ -134,14 +131,14 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: 'rgba(8,145,178,0.13)',
+    backgroundColor: '#f8fafc',
     overflow: 'hidden',
+  },
+  cardContent: {
+    flex: 1,
     padding: 24,
     justifyContent: 'space-between',
-    backgroundColor: '#e2e8f0', // Fallback
-  },
-  cardBgWrapper: {
-    ...StyleSheet.absoluteFillObject,
-    borderRadius: 16,
+    alignItems: 'flex-start',
   },
   cardBgImage: {
     width: '100%',
@@ -159,6 +156,7 @@ const styles = StyleSheet.create({
     opacity: 0.08,
   },
   cardTopRow: {
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -172,14 +170,19 @@ const styles = StyleSheet.create({
   cardChip: {
     width: 36,
     height: 24,
-    backgroundColor: 'rgba(255,255,255,0.3)',
+    backgroundColor: 'rgba(255,255,255,0.1)',
     borderRadius: 4,
   },
   cardBottomRow: {
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     zIndex: 10,
+  },
+  cardHolderContainer: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   cardHolder: {
     fontFamily: 'GeneralSans-Medium',
@@ -195,8 +198,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+    paddingTop: 16,
     paddingHorizontal: 24,
-    marginBottom: 24,
   },
   cardMetadataType: {
     fontFamily: 'GeneralSans-Semibold',
@@ -211,12 +214,13 @@ const styles = StyleSheet.create({
   dashboardActions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    paddingTop: 24,
     paddingHorizontal: 24,
-    marginBottom: 32,
   },
   actionButton: {
-    alignItems: 'center',
     width: 80,
+    alignItems: 'center',
     gap: 8,
   },
   actionIconOuter: {
@@ -234,20 +238,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   integrationsSection: {
+    paddingTop: 32,
     paddingHorizontal: 24,
+    width: '100%',
   },
   appleWalletRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 56,
-    paddingHorizontal: 16,
     backgroundColor: '#ffffff',
     borderWidth: 1,
     borderColor: '#e2e8f0',
     borderRadius: 12,
+    height: 56,
+    paddingHorizontal: 16,
+    gap: 12,
   },
   appleIcon: {
-    marginRight: 12,
     marginLeft: 4,
   },
   applePayLabel: {
