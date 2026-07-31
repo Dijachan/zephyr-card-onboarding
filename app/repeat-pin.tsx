@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import * as Animatable from 'react-native-animatable';
+
+const KEYPAD_DATA = [
+  [{ num: '1', sub: '' }, { num: '2', sub: 'ABC' }, { num: '3', sub: 'DEF' }],
+  [{ num: '4', sub: 'GHI' }, { num: '5', sub: 'JKL' }, { num: '6', sub: 'MNO' }],
+  [{ num: '7', sub: 'PQRS' }, { num: '8', sub: 'TUV' }, { num: '9', sub: 'WXYZ' }],
+  [{ num: '', sub: '' }, { num: '0', sub: '' }, { num: 'backspace', sub: '' }],
+];
 
 export default function RepeatPinScreen() {
   const router = useRouter();
@@ -66,44 +73,42 @@ export default function RepeatPinScreen() {
           </Animatable.View>
         </View>
 
-        {/* Custom Numpad */}
-        <Animatable.View animation="fadeInUp" duration={600} delay={300} style={styles.keypad}>
-          {[
-            ['1', '2', '3'],
-            ['4', '5', '6'],
-            ['7', '8', '9'],
-            ['', '0', 'backspace'],
-          ].map((row, rowIndex) => (
-            <View key={rowIndex} style={styles.keypadRow}>
-              {row.map((key, colIndex) => {
-                if (key === '') {
-                  return <View key={colIndex} style={styles.keyButton} />;
-                }
-                if (key === 'backspace') {
+        {/* Custom Keypad matching pay-new-card */}
+        <Animatable.View animation="fadeInUp" duration={600} delay={300} style={styles.keypadSection}>
+          <View style={styles.numpadGrid}>
+            {KEYPAD_DATA.map((row, rowIndex) => (
+              <View key={rowIndex} style={styles.numpadRow}>
+                {row.map((item, colIndex) => {
+                  if (item.num === '') {
+                    return <View key={colIndex} style={styles.keyEmpty} />;
+                  }
+                  if (item.num === 'backspace') {
+                    return (
+                      <TouchableOpacity
+                        key={colIndex}
+                        style={styles.keyAction}
+                        onPress={() => handlePressKey('backspace')}
+                        activeOpacity={0.6}
+                      >
+                        <Feather name="delete" size={24} color="#0f172a" />
+                      </TouchableOpacity>
+                    );
+                  }
                   return (
                     <TouchableOpacity
                       key={colIndex}
-                      style={styles.keyButton}
-                      onPress={() => handlePressKey('backspace')}
+                      style={styles.key}
+                      onPress={() => handlePressKey(item.num)}
                       activeOpacity={0.6}
                     >
-                      <Feather name="delete" size={24} color="#0f172a" />
+                      <Text style={styles.keyText}>{item.num}</Text>
+                      {item.sub ? <Text style={styles.keySubtext}>{item.sub}</Text> : null}
                     </TouchableOpacity>
                   );
-                }
-                return (
-                  <TouchableOpacity
-                    key={colIndex}
-                    style={styles.keyButton}
-                    onPress={() => handlePressKey(key)}
-                    activeOpacity={0.6}
-                  >
-                    <Text style={styles.keyText}>{key}</Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-          ))}
+                })}
+              </View>
+            ))}
+          </View>
         </Animatable.View>
       </View>
     </SafeAreaView>
@@ -185,25 +190,49 @@ const styles = StyleSheet.create({
     height: 24,
     backgroundColor: '#0891b2',
   },
-  keypad: {
+  keypadSection: {
+    backgroundColor: '#f8fafc',
+    borderTopWidth: 1,
+    borderTopColor: '#e2e8f0',
+    paddingTop: 16,
+    paddingBottom: Platform.OS === 'ios' ? 34 : 24,
+  },
+  numpadGrid: {
     paddingHorizontal: 24,
-    paddingBottom: 36,
-    gap: 16,
+    gap: 10,
   },
-  keypadRow: {
+  numpadRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    gap: 10,
   },
-  keyButton: {
-    width: 80,
-    height: 60,
+  key: {
+    flex: 1,
+    height: 48,
+    backgroundColor: '#f1f5f9',
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 30,
+  },
+  keyEmpty: {
+    flex: 1,
+    height: 48,
+  },
+  keyAction: {
+    flex: 1,
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   keyText: {
-    fontFamily: 'GeneralSans-Semibold',
-    fontSize: 26,
+    fontFamily: 'ClashDisplay-Bold',
+    fontSize: 24,
     color: '#0f172a',
+  },
+  keySubtext: {
+    fontFamily: 'GeneralSans-Medium',
+    fontSize: 10,
+    color: '#64748b',
+    textTransform: 'uppercase',
+    marginTop: -2,
   },
 });
