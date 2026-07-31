@@ -11,32 +11,35 @@ export default function PaymentSuccessScreen() {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         
-        {/* Top Confetti Section */}
-        <View style={styles.topContent}>
-          <Animatable.View animation="fadeIn" duration={1000} style={styles.celebrationArea}>
-            {/* Simple confetti shapes built with Views */}
-            <Animatable.View animation="bounceIn" delay={300} style={[styles.confettiPill, styles.pillCyan]} />
-            <Animatable.View animation="bounceIn" delay={400} style={[styles.confettiPill, styles.pillOrange]} />
-            <Animatable.View animation="bounceIn" delay={500} style={[styles.confettiDot, styles.dotYellow]} />
-            <Animatable.View animation="bounceIn" delay={600} style={[styles.confettiDot, styles.dotGreen]} />
-            
-            {/* The main checkmark or badge in the center */}
-            <Animatable.View animation="zoomIn" delay={100} style={styles.mainBadge}>
-              <View style={styles.checkmarkOuter}>
-                <Feather name="check" size={24} color="#ffffff" />
-              </View>
+        {/* Centered Group */}
+        <View style={styles.centerContent}>
+          {/* Top Confetti Section */}
+          <View style={styles.topContent}>
+            <Animatable.View animation="fadeIn" duration={1000} style={styles.celebrationArea}>
+              {/* Simple confetti shapes built with Views */}
+              <Animatable.View animation="bounceIn" delay={300} style={[styles.confettiPill, styles.pillCyan]} />
+              <Animatable.View animation="bounceIn" delay={400} style={[styles.confettiPill, styles.pillOrange]} />
+              <Animatable.View animation="bounceIn" delay={500} style={[styles.confettiDot, styles.dotYellow]} />
+              <Animatable.View animation="bounceIn" delay={600} style={[styles.confettiDot, styles.dotGreen]} />
+              
+              {/* The main checkmark or badge in the center */}
+              <Animatable.View animation="zoomIn" delay={100} style={styles.mainBadge}>
+                <View style={styles.checkmarkOuter}>
+                  <Feather name="check" size={24} color="#ffffff" />
+                </View>
+              </Animatable.View>
             </Animatable.View>
-          </Animatable.View>
-        </View>
+          </View>
 
-        {/* Text Info */}
-        <View style={styles.successInfo}>
-          <Animatable.Text animation="fadeInUp" delay={200} style={styles.successTitle}>
-            Payment successful!
-          </Animatable.Text>
-          <Animatable.Text animation="fadeInUp" delay={300} style={styles.successDesc}>
-            Your card has been ordered and 15 USD was added to your account.
-          </Animatable.Text>
+          {/* Text Info */}
+          <View style={styles.successInfo}>
+            <Animatable.Text animation="fadeInUp" delay={200} style={styles.successTitle}>
+              Payment successful!
+            </Animatable.Text>
+            <Animatable.Text animation="fadeInUp" delay={300} style={styles.successDesc}>
+              Your card has been ordered and 15 USD was added to your account.
+            </Animatable.Text>
+          </View>
         </View>
 
         {/* Actions */}
@@ -75,10 +78,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
+  centerContent: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   topContent: {
-    height: 240,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 24,
   },
   celebrationArea: {
     width: '100%',
@@ -144,7 +151,6 @@ const styles = StyleSheet.create({
   successInfo: {
     paddingHorizontal: 32,
     alignItems: 'center',
-    flex: 1,
   },
   successTitle: {
     fontFamily: 'ClashDisplay-Bold',
@@ -180,7 +186,9 @@ const styles = StyleSheet.create({
     color: '#0f172a',
   },
   btnGoCard: {
-    backgroundColor: '#0891b2',
+    backgroundColor: 'rgba(229,112,43,0.8)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.3)',
   },
   btnGoCardText: {
     color: '#ffffff',

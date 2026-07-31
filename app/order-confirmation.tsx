@@ -168,7 +168,7 @@ export default function OrderConfirmationScreen() {
             activeOpacity={0.9}
             onPress={() => router.push('/pay-new-card')}
           >
-            <Text style={styles.ctaText}>Add card</Text>
+            <Text style={styles.ctaText}>Pay {totalAmount} USD</Text>
           </TouchableOpacity>
         </View>
       </View>
