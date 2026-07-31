@@ -7,9 +7,9 @@ export default function LoadingScreen() {
   const router = useRouter();
 
   useEffect(() => {
-    // Simulate loading, then navigate to pricing
+    // Simulate loading, then navigate to order-confirmation
     const timer = setTimeout(() => {
-      router.push('/pricing');
+      router.push('/order-confirmation');
     }, 2500);
     return () => clearTimeout(timer);
   }, [router]);

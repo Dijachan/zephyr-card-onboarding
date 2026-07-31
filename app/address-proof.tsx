@@ -90,7 +90,7 @@ export default function AddressProofScreen() {
             style={[styles.ctaButton, !uploaded && styles.ctaButtonDisabled]}
             activeOpacity={0.9}
             disabled={!uploaded}
-            onPress={() => router.push('/processing')}
+            onPress={() => router.push('/loading')}
           >
             <Text style={[styles.ctaText, !uploaded && styles.ctaTextDisabled]}>Continue</Text>
             <Feather name="arrow-right" size={20} color={uploaded ? "#ffffff" : "#94a3b8"} style={styles.ctaIcon} />
