@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
 import * as Animatable from 'react-native-animatable';
+import { Feather } from '@expo/vector-icons';
 
 export default function PaymentSuccessScreen() {
   const router = useRouter();
@@ -14,19 +15,15 @@ export default function PaymentSuccessScreen() {
         <View style={styles.topContent}>
           <Animatable.View animation="fadeIn" duration={1000} style={styles.celebrationArea}>
             {/* Simple confetti shapes built with Views */}
-            <Animatable.View animation="bounceIn" delay={300} style={[styles.confettiPill, styles.pillBlue]} />
-            <Animatable.View animation="bounceIn" delay={400} style={[styles.confettiPill, styles.pillCyan]} />
-            <Animatable.View animation="bounceIn" delay={500} style={[styles.confettiDot, styles.dotOrange]} />
-            <Animatable.View animation="bounceIn" delay={600} style={[styles.confettiDot, styles.dotYellow]} />
+            <Animatable.View animation="bounceIn" delay={300} style={[styles.confettiPill, styles.pillCyan]} />
+            <Animatable.View animation="bounceIn" delay={400} style={[styles.confettiPill, styles.pillOrange]} />
+            <Animatable.View animation="bounceIn" delay={500} style={[styles.confettiDot, styles.dotYellow]} />
+            <Animatable.View animation="bounceIn" delay={600} style={[styles.confettiDot, styles.dotGreen]} />
             
             {/* The main checkmark or badge in the center */}
             <Animatable.View animation="zoomIn" delay={100} style={styles.mainBadge}>
               <View style={styles.checkmarkOuter}>
-                <View style={styles.checkmarkInner}>
-                  {/* CSS-based checkmark */}
-                  <View style={styles.checkStem} />
-                  <View style={styles.checkKick} />
-                </View>
+                <Feather name="check" size={24} color="#ffffff" />
               </View>
             </Animatable.View>
           </Animatable.View>
@@ -47,7 +44,7 @@ export default function PaymentSuccessScreen() {
           <Animatable.View animation="fadeInUp" delay={400}>
             <TouchableOpacity 
               style={[styles.btn, styles.btnAddMoney]}
-              activeOpacity={0.9}
+              activeOpacity={0.8}
             >
               <Text style={[styles.btnText, styles.btnAddMoneyText]}>Add money</Text>
             </TouchableOpacity>
@@ -95,17 +92,17 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     transform: [{ rotate: '45deg' }],
   },
-  pillBlue: {
+  pillCyan: {
     width: 24,
     height: 12,
-    backgroundColor: '#3b82f6',
+    backgroundColor: '#0891b2',
     top: 40,
     left: 40,
   },
-  pillCyan: {
+  pillOrange: {
     width: 32,
     height: 16,
-    backgroundColor: '#06b6d4',
+    backgroundColor: '#e5702b',
     top: 110,
     right: 40,
     transform: [{ rotate: '-30deg' }],
@@ -114,17 +111,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderRadius: 10,
   },
-  dotOrange: {
+  dotYellow: {
     width: 12,
     height: 12,
-    backgroundColor: '#f97316',
+    backgroundColor: '#f59e0b',
     top: 130,
     left: 100,
   },
-  dotYellow: {
+  dotGreen: {
     width: 8,
     height: 8,
-    backgroundColor: '#eab308',
+    backgroundColor: '#10b981',
     top: 30,
     right: 120,
   },
@@ -132,7 +129,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#ecfeff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -140,33 +137,9 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#0f172a',
+    backgroundColor: '#0891b2',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  checkmarkInner: {
-    width: 18,
-    height: 18,
-    position: 'relative',
-    marginTop: -4,
-  },
-  checkStem: {
-    position: 'absolute',
-    width: 3,
-    height: 16,
-    backgroundColor: '#ffffff',
-    left: 12,
-    top: 0,
-    transform: [{ rotate: '45deg' }],
-  },
-  checkKick: {
-    position: 'absolute',
-    width: 8,
-    height: 3,
-    backgroundColor: '#ffffff',
-    left: 4,
-    top: 11,
-    transform: [{ rotate: '45deg' }],
   },
   successInfo: {
     paddingHorizontal: 32,
@@ -181,7 +154,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   successDesc: {
-    fontFamily: 'GeneralSans-Medium',
+    fontFamily: 'GeneralSans-Regular',
     fontSize: 16,
     color: '#64748b',
     textAlign: 'center',
@@ -199,13 +172,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   btnAddMoney: {
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#f8fafc',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
   },
   btnAddMoneyText: {
     color: '#0f172a',
   },
   btnGoCard: {
-    backgroundColor: '#0f172a',
+    backgroundColor: '#0891b2',
   },
   btnGoCardText: {
     color: '#ffffff',

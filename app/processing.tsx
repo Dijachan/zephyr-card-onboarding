@@ -13,9 +13,9 @@ export default function ProcessingScreen() {
       setStep(2);
     }, 1500);
 
-    // Automatically transition to order confirmation after 3.5 seconds
+    // Automatically transition to success screen after 3.5 seconds
     const redirectTimer = setTimeout(() => {
-      router.replace('/order-confirmation');
+      router.replace('/payment-success');
     }, 3500);
 
     return () => {
