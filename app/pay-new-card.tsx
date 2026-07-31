@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
 export default function PayNewCardScreen() {
   const router = useRouter();
+  
+  // State to manage whether the custom keypad and active inputs are shown
+  const [activeInput, setActiveInput] = useState<'cardNumber' | 'expiry' | 'cvv' | null>(null);
+
+  // State to toggle "Save card" on and off
+  const [saveCard, setSaveCard] = useState(true);
+
+  // Example mocked typed value to show the filled state when active
+  // (In a real app, this would be updated via the custom keypad)
+  const isFilled = activeInput !== null;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -34,120 +44,180 @@ export default function PayNewCardScreen() {
 
           {/* Form Section */}
           <View style={styles.formSection}>
-            {/* Card Number (Active State) */}
+            {/* Card Number */}
             <View style={styles.inputGroup}>
               <Text style={styles.inputLabel}>Card number</Text>
-              <View style={[styles.inputBox, styles.inputBoxActive]}>
-                <View style={styles.mastercardIcon}>
-                  <View style={[styles.mcCircle, styles.mcRed]} />
-                  <View style={[styles.mcCircle, styles.mcOrange, { marginLeft: -8 }]} />
-                </View>
-                <Text style={styles.inputTextActive}>5412 75</Text>
-                <View style={styles.cursor} />
-              </View>
+              <TouchableOpacity 
+                activeOpacity={1}
+                style={[styles.inputBox, activeInput === 'cardNumber' && styles.inputBoxActive]}
+                onPress={() => setActiveInput('cardNumber')}
+              >
+                {isFilled ? (
+                  <>
+                    <View style={styles.mastercardIcon}>
+                      <View style={[styles.mcCircle, styles.mcRed]} />
+                      <View style={[styles.mcCircle, styles.mcOrange, { marginLeft: -8 }]} />
+                    </View>
+                    <Text style={styles.inputTextActive}>5412 75</Text>
+                    {activeInput === 'cardNumber' && <View style={styles.cursor} />}
+                  </>
+                ) : (
+                  <>
+                    <Feather name="credit-card" size={20} color="#0f172a" style={styles.inputIcon} />
+                    <Text style={styles.inputPlaceholder}>Card number</Text>
+                  </>
+                )}
+              </TouchableOpacity>
             </View>
 
             {/* Save Card Toggle */}
-            <View style={styles.toggleRow}>
+            <TouchableOpacity 
+              activeOpacity={0.8}
+              style={styles.toggleRow}
+              onPress={() => setSaveCard(!saveCard)}
+            >
               <Text style={styles.toggleLabel}>Save this card for future payments</Text>
-              <View style={styles.toggleOn}>
-                <View style={styles.toggleThumb} />
+              <View style={[styles.toggleTrack, saveCard && styles.toggleTrackOn]}>
+                <View style={[styles.toggleThumb, saveCard ? styles.toggleThumbOn : styles.toggleThumbOff]} />
               </View>
-            </View>
+            </TouchableOpacity>
 
             {/* Expiry & CVV */}
             <View style={styles.rowInputs}>
               <View style={styles.halfInputGroup}>
                 <Text style={styles.inputLabel}>Expiry date</Text>
-                <View style={styles.inputBox}>
-                  <Text style={styles.inputTextFilled}>12</Text>
-                  <Text style={styles.inputSlash}> / </Text>
-                  <Text style={styles.inputTextFilled}>27</Text>
-                </View>
+                <TouchableOpacity 
+                  activeOpacity={1}
+                  style={[styles.inputBox, activeInput === 'expiry' && styles.inputBoxActive]}
+                  onPress={() => setActiveInput('expiry')}
+                >
+                  {isFilled ? (
+                    <>
+                      <Text style={styles.inputTextFilled}>12</Text>
+                      <Text style={styles.inputSlash}> / </Text>
+                      <Text style={styles.inputTextFilled}>27</Text>
+                      {activeInput === 'expiry' && <View style={styles.cursor} />}
+                    </>
+                  ) : (
+                    <>
+                      <Text style={styles.inputPlaceholderHalf}>MM</Text>
+                      <Text style={styles.inputSlash}>/</Text>
+                      <Text style={styles.inputPlaceholderHalf}>YY</Text>
+                    </>
+                  )}
+                </TouchableOpacity>
               </View>
               
               <View style={styles.halfInputGroup}>
                 <Text style={styles.inputLabel}>Security code</Text>
-                <View style={styles.inputBox}>
+                <TouchableOpacity 
+                  activeOpacity={1}
+                  style={[styles.inputBox, activeInput === 'cvv' && styles.inputBoxActive]}
+                  onPress={() => setActiveInput('cvv')}
+                >
                   <Feather name="lock" size={18} color="#0f172a" style={styles.inputIcon} />
-                  <Text style={styles.inputTextFilled}>•••</Text>
-                </View>
+                  {isFilled ? (
+                    <>
+                      <Text style={styles.inputTextFilled}>•••</Text>
+                      {activeInput === 'cvv' && <View style={styles.cursor} />}
+                    </>
+                  ) : (
+                    <Text style={styles.inputPlaceholder}>CVV/CVC</Text>
+                  )}
+                </TouchableOpacity>
               </View>
             </View>
           </View>
         </View>
+
+        {/* Empty State Footer (Visible only when keypad is NOT active) */}
+        {!activeInput && (
+          <View style={styles.footer}>
+            <TouchableOpacity 
+              style={styles.ctaButton}
+              onPress={() => router.push('/processing')}
+            >
+              <Text style={styles.ctaText}>Pay</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
 
-      {/* Keypad Section */}
-      <View style={styles.keypadSection}>
-        {/* CTA Button */}
-        <View style={styles.ctaContainer}>
-          <TouchableOpacity 
-            style={styles.ctaButton}
-            onPress={() => router.push('/processing')}
-          >
-            <Text style={styles.ctaText}>Pay 24 USD</Text>
-          </TouchableOpacity>
-        </View>
+      {/* Keypad Section (Visible only when an input IS active) */}
+      {activeInput && (
+        <View style={styles.keypadSection}>
+          {/* CTA Button */}
+          <View style={styles.ctaContainer}>
+            <TouchableOpacity 
+              style={styles.ctaButton}
+              onPress={() => {
+                setActiveInput(null);
+                router.push('/processing');
+              }}
+            >
+              <Text style={styles.ctaText}>Pay 24 USD</Text>
+            </TouchableOpacity>
+          </View>
 
-        {/* Numpad Grid */}
-        <View style={styles.numpadGrid}>
-          {/* Row 1 */}
-          <View style={styles.numpadRow}>
-            <TouchableOpacity style={styles.key}>
-              <Text style={styles.keyText}>1</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.key}>
-              <Text style={styles.keyText}>2</Text>
-              <Text style={styles.keySubtext}>ABC</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.key}>
-              <Text style={styles.keyText}>3</Text>
-              <Text style={styles.keySubtext}>DEF</Text>
-            </TouchableOpacity>
-          </View>
-          {/* Row 2 */}
-          <View style={styles.numpadRow}>
-            <TouchableOpacity style={styles.key}>
-              <Text style={styles.keyText}>4</Text>
-              <Text style={styles.keySubtext}>GHI</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.key}>
-              <Text style={styles.keyText}>5</Text>
-              <Text style={styles.keySubtext}>JKL</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.key}>
-              <Text style={styles.keyText}>6</Text>
-              <Text style={styles.keySubtext}>MNO</Text>
-            </TouchableOpacity>
-          </View>
-          {/* Row 3 */}
-          <View style={styles.numpadRow}>
-            <TouchableOpacity style={styles.key}>
-              <Text style={styles.keyText}>7</Text>
-              <Text style={styles.keySubtext}>PQRS</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.key}>
-              <Text style={styles.keyText}>8</Text>
-              <Text style={styles.keySubtext}>TUV</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.key}>
-              <Text style={styles.keyText}>9</Text>
-              <Text style={styles.keySubtext}>WXYZ</Text>
-            </TouchableOpacity>
-          </View>
-          {/* Row 4 */}
-          <View style={styles.numpadRow}>
-            <View style={styles.keyEmpty} />
-            <TouchableOpacity style={styles.key}>
-              <Text style={styles.keyText}>0</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.keyAction}>
-              <Feather name="delete" size={24} color="#0f172a" />
-            </TouchableOpacity>
+          {/* Numpad Grid */}
+          <View style={styles.numpadGrid}>
+            {/* Row 1 */}
+            <View style={styles.numpadRow}>
+              <TouchableOpacity style={styles.key}>
+                <Text style={styles.keyText}>1</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.key}>
+                <Text style={styles.keyText}>2</Text>
+                <Text style={styles.keySubtext}>ABC</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.key}>
+                <Text style={styles.keyText}>3</Text>
+                <Text style={styles.keySubtext}>DEF</Text>
+              </TouchableOpacity>
+            </View>
+            {/* Row 2 */}
+            <View style={styles.numpadRow}>
+              <TouchableOpacity style={styles.key}>
+                <Text style={styles.keyText}>4</Text>
+                <Text style={styles.keySubtext}>GHI</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.key}>
+                <Text style={styles.keyText}>5</Text>
+                <Text style={styles.keySubtext}>JKL</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.key}>
+                <Text style={styles.keyText}>6</Text>
+                <Text style={styles.keySubtext}>MNO</Text>
+              </TouchableOpacity>
+            </View>
+            {/* Row 3 */}
+            <View style={styles.numpadRow}>
+              <TouchableOpacity style={styles.key}>
+                <Text style={styles.keyText}>7</Text>
+                <Text style={styles.keySubtext}>PQRS</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.key}>
+                <Text style={styles.keyText}>8</Text>
+                <Text style={styles.keySubtext}>TUV</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.key}>
+                <Text style={styles.keyText}>9</Text>
+                <Text style={styles.keySubtext}>WXYZ</Text>
+              </TouchableOpacity>
+            </View>
+            {/* Row 4 */}
+            <View style={styles.numpadRow}>
+              <View style={styles.keyEmpty} />
+              <TouchableOpacity style={styles.key}>
+                <Text style={styles.keyText}>0</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.keyAction}>
+                <Feather name="delete" size={24} color="#0f172a" />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -159,6 +229,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    justifyContent: 'space-between',
   },
   content: {
     flex: 1,
@@ -273,7 +344,6 @@ const styles = StyleSheet.create({
     fontFamily: 'GeneralSans-Medium',
     fontSize: 15,
     color: '#0f172a',
-    flex: 1,
   },
   cursor: {
     width: 1.5,
@@ -288,10 +358,22 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#0f172a',
   },
-  inputSlash: {
+  inputPlaceholder: {
     fontFamily: 'GeneralSans-Regular',
     fontSize: 15,
     color: '#64748b',
+    flex: 1,
+  },
+  inputPlaceholderHalf: {
+    fontFamily: 'GeneralSans-Regular',
+    fontSize: 15,
+    color: '#64748b',
+    flex: 1,
+  },
+  inputSlash: {
+    fontFamily: 'GeneralSans-Regular',
+    fontSize: 15,
+    color: '#e2e8f0',
   },
   toggleRow: {
     flexDirection: 'row',
@@ -305,25 +387,33 @@ const styles = StyleSheet.create({
     color: '#0f172a',
     flex: 1,
   },
-  toggleOn: {
+  toggleTrack: {
     width: 44,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#34C759',
+    backgroundColor: '#e2e8f0',
     justifyContent: 'center',
     paddingHorizontal: 2,
+  },
+  toggleTrackOn: {
+    backgroundColor: '#34C759',
   },
   toggleThumb: {
     width: 20,
     height: 20,
     borderRadius: 10,
     backgroundColor: '#ffffff',
-    alignSelf: 'flex-end',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,
+  },
+  toggleThumbOff: {
+    alignSelf: 'flex-start',
+  },
+  toggleThumbOn: {
+    alignSelf: 'flex-end',
   },
   rowInputs: {
     flexDirection: 'row',
@@ -333,16 +423,10 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 8,
   },
-  keypadSection: {
-    backgroundColor: '#f8fafc',
-    borderTopWidth: 1,
-    borderTopColor: '#e2e8f0',
-    paddingTop: 16,
-    paddingBottom: Platform.OS === 'ios' ? 34 : 24,
-  },
-  ctaContainer: {
+  footer: {
     paddingHorizontal: 24,
-    marginBottom: 16,
+    paddingBottom: 24,
+    backgroundColor: '#ffffff',
   },
   ctaButton: {
     height: 52,
@@ -357,6 +441,17 @@ const styles = StyleSheet.create({
     fontFamily: 'GeneralSans-Semibold',
     fontSize: 16,
     color: '#ffffff',
+  },
+  keypadSection: {
+    backgroundColor: '#f8fafc',
+    borderTopWidth: 1,
+    borderTopColor: '#e2e8f0',
+    paddingTop: 16,
+    paddingBottom: Platform.OS === 'ios' ? 34 : 24,
+  },
+  ctaContainer: {
+    paddingHorizontal: 24,
+    marginBottom: 16,
   },
   numpadGrid: {
     paddingHorizontal: 24,
